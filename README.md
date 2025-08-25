@@ -67,3 +67,61 @@ python cli.py collections samples/points.json cookies.json --collection-name "Д
 ### Примечания
 - UI Яндекс.Карт меняется; селекторы в Playwright подобраны с запасом (несколько вариантов, русские/роле-селекторы).
 - При необходимости используйте `--headless False` для наглядности и скриншотов.
+
+### FastAPI сервер
+
+Запуск сервера:
+```
+uvicorn server:app --host 0.0.0.0 --port 8000
+```
+
+Проверка здоровья:
+```
+GET http://localhost:8000/health
+```
+
+Преобразование точек в GeoJSON:
+```
+POST http://localhost:8000/to-geojson
+Body (json): [
+  {"id":"p1","latitude":55.751244,"longitude":37.618423,"title":"Москва"}
+]
+```
+
+Публикация через Конструктор карт (вернёт публичную ссылку):
+```
+POST http://localhost:8000/publish/constructor
+Body (json): {
+  "title": "Демо точки",
+  "points": [
+    {"id":"p1","latitude":55.751244,"longitude":37.618423,"title":"Москва"}
+  ],
+  "headless": false
+}
+```
+Ответ:
+```
+{"url": "https://yandex.ru/map-..."}
+```
+
+Публикация в Коллекции (нужны cookies авторизованной сессии):
+```
+POST http://localhost:8000/publish/collections
+Body (json): {
+  "cookies_path": "samples/cookies.sample.json",
+  "collection_name": "Демо коллекция",
+  "points": [
+    {"id":"p1","latitude":55.751244,"longitude":37.618423,"title":"Москва"}
+  ],
+  "headless": false
+}
+```
+
+Упрощённые эндпоинты из файлов:
+```
+POST http://localhost:8000/publish/constructor/from-file?path=samples/points.json&title=Демо&headless=false
+POST http://localhost:8000/publish/collections/from-file?points_path=samples/points.json&cookies_path=samples/cookies.sample.json&collection_name=Демо&headless=false
+```
+
+Где взять ссылку для открытия карты?
+- Эндпоинты публикации возвращают поле `url`. Это и есть ссылка, которую можно открыть на любом устройстве и увидеть метки на карте.
