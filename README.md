@@ -12,7 +12,7 @@
 - **Коллекции в аккаунте**: добавляет точки в коллекцию авторизованного пользователя, можно поделиться ссылкой на коллекцию. Видно на всех устройствах при входе в аккаунт; по ссылке — всем.
 
 ### Быстрый старт
-1) Установите Python 3.12+ и создайте окружение:
+1) Установите Python 3.12+ и создайте окружение (доступен консольный скрипт `yandex-markers` при установке проекта):
 ```
 python3 -m venv .venv
 . .venv/bin/activate
@@ -23,12 +23,12 @@ python -m playwright install chromium
 
 2) Проверьте входные данные:
 ```
-python cli.py to_geojson samples/points.json
+yandex-markers to_geojson samples/points.json
 ```
 
 3a) Опубликовать карту через Конструктор:
 ```
-python cli.py constructor samples/points.json --title "Демо точки" --headless False
+yandex-markers constructor samples/points.json --title "Демо точки" --headless False
 ```
 На выходе получите URL опубликованной карты. Откройте на другом устройстве/в другом браузере — метки видны.
 
@@ -36,7 +36,7 @@ python cli.py constructor samples/points.json --title "Демо точки" --he
 - В браузере откройте `yandex.ru`, войдите.
 - В DevTools Application/Storage экспортируйте cookies в JSON (см. `samples/cookies.sample.json`).
 ```
-python cli.py collections samples/points.json cookies.json --collection-name "Демо коллекция" --headless False
+yandex-markers collections samples/points.json cookies.json --collection-name "Демо коллекция" --headless False
 ```
 Скрипт распечатает ссылку на коллекцию. Откройте на другом устройстве (вошли в аккаунт — появится в Коллекциях; либо по ссылке).
 
