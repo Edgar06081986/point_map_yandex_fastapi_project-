@@ -1,0 +1,13 @@
+{
+  "cookies": [
+    {
+      "name": "yandexuid",
+      "value": "...",
+      "domain": ".yandex.ru",
+      "path": "/",
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    }
+  ]
+}
